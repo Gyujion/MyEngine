@@ -186,14 +186,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // 파랑 브러쉬 삭제
 			DeleteObject(brush);
 
-            HPEN redPen = CreatePen(PS_SOLID, 2, RGB(255, 0, 0));
+            HPEN redPen = CreatePen(PS_DOT, 2, RGB(125,20,100));
 			HPEN oldPen = (HPEN)SelectObject(hdc, redPen);
-
 
             Ellipse(hdc, 200, 200, 300, 300);
 
             SelectObject(hdc, oldPen);
 			DeleteObject(redPen);
+               
+            TCHAR str[20];
+            wsprintf(str, TEXT("score : %d"), 10);
+            TextOut(hdc, 500, 500, str, lstrlen(str));
 
             EndPaint(hWnd, &ps);
         }
