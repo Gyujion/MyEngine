@@ -5,7 +5,7 @@
 #include "EditorWindow.h"
 #include "..\\MyEngine_SOURCE\meApplication.h"
 
-Application app;
+me::Application application;
 
 #define MAX_LOADSTRING 100
 
@@ -28,8 +28,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
-    // 깃허브 테스트용 주석
-	app.test();
 
     // TODO: 여기에 코드를 입력합니다.
     // 전역 문자열을 초기화합니다.
@@ -61,8 +59,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
         else
         {
-            // 메세지가 없을 경우 여기서 처리
-            // 게임 로직이 들어가면 된다.
+            application.Run();
         }
     }
 
@@ -123,6 +120,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+   
+   application.Intialize(hWnd);
 
    if (!hWnd)
    {
@@ -172,31 +171,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
 
-            // 파랑 브러쉬 생성
-            HBRUSH brush = CreateSolidBrush(RGB(0, 0, 255));
             
-            // 파랑 브러쉬 DC에 선택, 흰색 브러쉬 oldbrush에 저장
-			HBRUSH oldbrush = (HBRUSH)SelectObject(hdc, brush);
-
-            Rectangle(hdc, 100, 100, 200, 200);
-
-            // 흰색 브러쉬 다시 선택
-			(HBRUSH)SelectObject(hdc, oldbrush);
-
-            // 파랑 브러쉬 삭제
-			DeleteObject(brush);
-
-            HPEN redPen = CreatePen(PS_DOT, 2, RGB(125,20,100));
-			HPEN oldPen = (HPEN)SelectObject(hdc, redPen);
-
-            Ellipse(hdc, 200, 200, 300, 300);
-
-            SelectObject(hdc, oldPen);
-			DeleteObject(redPen);
-               
-            TCHAR str[20];
-            wsprintf(str, TEXT("score : %d"), 10);
-            TextOut(hdc, 500, 500, str, lstrlen(str));
 
             EndPaint(hWnd, &ps);
         }
